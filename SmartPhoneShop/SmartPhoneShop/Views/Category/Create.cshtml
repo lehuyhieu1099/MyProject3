@@ -1,0 +1,51 @@
+﻿ 
+@model CategoryCreateViewModel
+@{
+    ViewBag.Title = "Create new category";
+    var categories = ViewBag.Categories as List<Category>;
+}
+<form enctype="multipart/form-data" asp-controller="Category" asp-action="Create" method="post">
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label asp-for="CategoryName"></label>
+        </div>
+        <div class="col-sm-10">
+            <input asp-for="CategoryName" class="form-control" />
+            <span asp-validation-for="CategoryName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label>Image</label>
+        </div>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input class="custom-file-input" value="nonCat.jpg" asp-for="CategoryImg">
+                <label class="custom-file-label" asp-for="CategoryImg" for="customFile">Choose file</label>
+                <span asp-validation-for="CategoryImg" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mb-3">
+        <img  id="avatar" src="~/images/Category/nonCat.jpg" style="width:300px;height:300px" />
+    </div>
+    <div class="row form-group justify-content-center">
+        <button type="submit" class="btn btn-primary form-group mr-5" style="width:75px;">Create</button>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-warning form-group" style="width:75px;">Back</a>
+    </div>
+</form>
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                $("#avatar").attr("src", window.URL.createObjectURL($(this)[0].files[0]));
+            });
+        });
+    </script>
+}

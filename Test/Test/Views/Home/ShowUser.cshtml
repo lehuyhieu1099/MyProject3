@@ -1,0 +1,44 @@
+﻿@model List<UserView> 
+
+<div>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">UserId</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Ward</th>
+                <th scope="col">District</th>
+                <th scope="col">Province</th>
+                <th scope="col">Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="coll" scope="row">@item.UserId</td>
+                    <td scope="col">@item.FullName</td>
+                    <td scope="col">@item.Email</td>
+                    <td scope="col">@item.PhoneNumber</td>
+                    <td class="coll" scope="col">@item.WardName</td>
+                    <td class="coll" scope="col">@item.DistrictName</td>
+                    <td class="coll" scope="col">@item.ProvinceName</td>
+                    <td scope="col">@item.Address</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<style>
+    div table{
+        column-width:auto !important
+    }
+    td{
+        font-size: 14px;
+    }
+    th, .coll{
+        text-align: center;
+    }
+</style>

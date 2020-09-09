@@ -1,0 +1,66 @@
+﻿ 
+@model BrandCreate
+@{
+    ViewBag.Title = "Create new brand";
+    var categories = ViewBag.Categories as List<Category>;
+}
+<form enctype="multipart/form-data" asp-controller="Brand" asp-action="Create" method="post">
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label>Category</label>
+        </div>
+        <div class="col-sm-10">
+            <select asp-for="CategoryId" class="custom-select" >
+                <option disabled selected>Select a Category</option>
+                @foreach (var category in categories)
+                {
+                    <option value="@category.CategoryId">@category.CategoryName</option>
+                }
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label asp-for="BrandName"></label>
+        </div>
+        <div class="col-sm-10">
+            <input asp-for="BrandName" class="form-control" />
+            <span asp-validation-for="BrandName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label>Image</label>
+        </div>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input class="custom-file-input" value="nonBrand.jpg" asp-for="BrandImg">
+                <label class="custom-file-label" asp-for="BrandImg" for="customFile">Choose file</label>
+                <span asp-validation-for="BrandImg" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mb-3">
+        <img  id="avatar" src="~/images/Brand/nonBrand.jpg" style="width:300px;height:300px" />
+    </div>
+    <div class="row form-group justify-content-center">
+        <button type="submit" class="btn btn-primary form-group mr-5" style="width:75px;">Create</button>
+        <a asp-controller="Brand" asp-action="Index" class="btn btn-warning form-group" style="width:75px;">Back</a>
+    </div>
+</form>
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                $("#avatar").attr("src", window.URL.createObjectURL($(this)[0].files[0]));
+            });
+        });
+    </script>
+}

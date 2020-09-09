@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Brand Not Found";
+}
+<div style="padding-bottom:300px;margin-top:260px;">
+    <div class="alert alert-danger mt-2">
+        <h1>Error 404</h1>
+        <hr />
+        <h5>Brand with Id = @ViewBag.id.ToString() can not be found</h5>
+    </div>
+    <a asp-controller="Brand" asp-action="Index" class="btn btn-outline-danger" style="width:auto">
+        Back to list Brand
+    </a>
+</div>

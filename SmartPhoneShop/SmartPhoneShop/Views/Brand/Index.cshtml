@@ -1,0 +1,90 @@
+﻿@model List<BrandView>
+@{
+    ViewBag.Title = "All brands";;
+
+}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="card-header row py-3">
+        <div>
+            <h3 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h3>
+        </div>
+        <div class="ml-auto" style="padding-right:30px">
+            <a asp-controller="Brand" asp-action="Create" class="btn btn-warning" style="width:150px">Create</a>
+        </div>
+    </div>
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">BrandName</th>
+                            <th scope="col">CategoryName</th>
+                            <th scope="col">Image</th>  
+                            <th scope="col">Action</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {   
+                        <tr class="fo">
+                            <td scope="row">@item.BrandId</td>
+                            <td scope="col">@item.BrandName</td>
+                            <td scope="col">@item.CategoryName</td>
+                            <td scope="col"><img src="~/images/Brand/@item.ImagePath" width="300" height="300" /></td>
+                            <td>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#@($"exampleModalLong{@item.BrandId}")">
+                                    Delete
+                                </button>
+                                <a type="button" class="btn btn-primary" asp-controller="Brand" asp-action="Edit" asp-route-id="@item.BrandId">
+                                    Edit
+                                </a>
+                                <div class="modal fade" id="@($"exampleModalLong{@item.BrandId}")" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Delete this brand</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                <a type="button" class="btn btn-primary" asp-controller="Brand" asp-action="Delete" asp-route-id="@item.BrandId">Yes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').dataTable();
+        });
+    </script>
+}

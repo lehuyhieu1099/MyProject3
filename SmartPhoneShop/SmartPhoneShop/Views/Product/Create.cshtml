@@ -1,0 +1,105 @@
+﻿ 
+@model ProductCreateViewModel
+@{
+    ViewBag.Title = "Create new product";
+    var categories = ViewBag.Categories as List<Category>;
+    var brands = ViewBag.Brands as List<Brand>;
+}
+<form enctype="multipart/form-data" asp-controller="Product" asp-action="Create" method="post">
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label>Category</label>
+        </div>
+        <div class="col-sm-10">
+            <select asp-for="CategoryId" class="custom-select" onchange="site.Change(this.value)">
+                <option disabled selected>Select a Category</option>
+                @foreach (var category in categories)
+                {
+                    <option value="@category.CategoryId">@category.CategoryName</option>
+                }
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label>Brand</label>
+        </div>
+        <div class="col-sm-10">
+            <select asp-for="BrandId" class="custom-select">
+                <option disabled selected>Select a Brand</option>
+            </select>
+            <span asp-validation-for="BrandId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label asp-for="ProductName"></label>
+        </div>
+        <div class="col-sm-10">
+            <input asp-for="ProductName" class="form-control" />
+            <span asp-validation-for="ProductName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label asp-for="Stock"></label>
+        </div>
+        <div class="col-sm-10">
+            <input asp-for="Stock" min="1" type="number" class="form-control" />
+            <span asp-validation-for="Stock" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label asp-for="Description"></label>
+        </div>
+        <div class="col-sm-10">
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label asp-for="Price"></label>
+        </div>
+        <div class="col-sm-10">
+            <input asp-for="Price" min="1000000" type="number" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-2">
+            <label></label>
+        </div>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input class="custom-file-input" value="nonPhone.png" asp-for="Image">
+                <label class="custom-file-label" asp-for="Image" for="customFile">Choose file</label>
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mb-3">
+        <img id="avatar" src="~/images/Product/nonPhone.png" style="width:100px;height:200px" />
+    </div>
+    <div class="row form-group justify-content-center">
+        <button type="submit" class="btn btn-primary form-group mr-5" style="width:75px;">Create</button>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-warning form-group" style="width:75px;">Back</a>
+    </div>
+</form>
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                $("#avatar").attr("src", window.URL.createObjectURL($(this)[0].files[0]));
+            });
+        });
+    </script>
+}

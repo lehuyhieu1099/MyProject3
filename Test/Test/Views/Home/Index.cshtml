@@ -1,0 +1,97 @@
+﻿@model User
+@inject TestDbContext context 
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+<div>
+    <form method="post" class="form-horizontal" asp-controller="Home" asp-action="Create">
+        <input type="hidden" id="ReturnURL" name="ReturnURL"  />
+        <fieldset id="account">
+            <legend>Thông tin cá nhân</legend>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="FullName" >Họ và tên</label>
+                <div class="col-sm-10">
+                    <input type="text"  asp-for="FullName" placeholder="Họ và tên"  class="form-control" required data-msg="Đây là trường bắt buộc" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Email">E-Mail</label>
+                <div class="col-sm-10">
+                    <input type="email"  asp-for="Email" placeholder="E-Mail"  class="form-control" required data-msg="Đây là trường bắt buộc" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="PhoneNumber">Số điện thoại</label>
+                <div class="col-sm-10">
+                    <input type="tel"  asp-for="PhoneNumber" placeholder="Số điện thoại"  class="form-control" required data-msg="Đây là trường bắt buộc" />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Mật khẩu của bạn</legend>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Password">Mật khẩu</label>
+                <div class="col-sm-10">
+                    <input type="password"  asp-for="Password" placeholder="Mật khẩu"  class="form-control" required data-msg="Đây là trường bắt buộc" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="ConfirmPassword">Xác nhận mật khẩu</label>
+                <div class="col-sm-10">
+                    <input type="password"  asp-for="ConfirmPassword" placeholder="Gõ lại mật khẩu mà bạn đã điền ở trên"  class="form-control" data-rule-equalto="#MatKhau" data-msg="Mật khẩu xác nhận không chính xác" />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Thông tin địa chỉ</legend>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >Tỉnh thành</label>
+                <div class="col-sm-10">
+                    <select class="form-control need-select2" asp-for="ProvinceId"   onchange="site.TinhThanhChange(this.value)" required data-msg="Đây là trường bắt buộc">
+                        @foreach (var item in context.Provinces)
+                        {
+                            <option value="@item.ProvinceId">@item.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >Quận/huyện</label>
+                <div class="col-sm-10">
+                    <select class="form-control need-select2" asp-for="DistrictId"  onchange="site.QuanHuyenChange(this.value)" required data-msg="Đây là trường bắt buộc">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >Phường/xã</label>
+                <div class="col-sm-10">
+                    <select class="form-control need-select2" asp-for="WardId"   required data-msg="Đây là trường bắt buộc">
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" >Địa chỉ</label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Address" placeholder="Số nhà, tên đường"  class="form-control" required data-msg="Đây là trường bắt buộc" />
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="buttons">
+            <div class="pull-right ml-3">
+                <div class="controls">
+                    <button class="btn btn-success" type="submit">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+}
